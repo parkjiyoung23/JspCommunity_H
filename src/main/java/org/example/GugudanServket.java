@@ -11,7 +11,7 @@ import java.io.IOException;
 @WebServlet("/gugudan")
 public class GugudanServket extends HttpServlet {
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {
 
     Rq rq = new Rq(req,resp);
 
@@ -27,3 +27,4 @@ public class GugudanServket extends HttpServlet {
 }
 
 //http://localhost:8081/gugudan?dan=5&limit=9
+//jsp 내장객체 검색
