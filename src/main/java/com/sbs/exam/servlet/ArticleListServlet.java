@@ -1,4 +1,4 @@
-package com.sbs.exam;
+package com.sbs.exam.servlet;
 
 import com.sbs.exam.util.DBUtil;
 import jakarta.servlet.ServletException;
@@ -14,9 +14,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-
-@WebServlet("/article/detail")
-public class ArticleDetailServle extends HttpServlet {
+@WebServlet("/article/list")
+public class ArticleListServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String url = "jdbc:mysql://127.0.0.1:3306/Jsp_Community?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
@@ -36,13 +35,13 @@ public class ArticleDetailServle extends HttpServlet {
 
     try {
       con = DriverManager.getConnection(url, user, password);
-      DBUtil dbUtil = new DBUtil(req, resp);
 
-      String sql = "SELECT * FROM article WHERE id=%d";
-      List<Map<String, Object>> articleRows = dbUtil.selectRows(con, sql);
 
-      req.setAttribute("articleRows", articleRows);
-      req.getRequestDispatcher("../article/detail.jsp").forward(req,resp);
+      String sql = String.format("SELECT * FROM article");
+      List<Map<String, Object>> articleRows = DBUtil.selectRows(con, sql);
+
+     req.setAttribute("articleRows", articleRows);
+     req.getRequestDispatcher("../article/list.jsp").forward(req,resp);
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
