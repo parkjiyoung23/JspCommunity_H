@@ -1,4 +1,4 @@
-package com.sbs.exam;
+package com.sbs.exam.exception;
 
 public class SQLErrorException extends RuntimeException {
   private Exception origin;
