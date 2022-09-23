@@ -32,3 +32,13 @@ SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목3',
 `body` = '내용3';
+
+SELECT * FROM article;
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = CONCAT('제목__', RAND()),
+`body`= CONCAT('내용__', RAND());
+
+SELECT COUNT(*) article;
