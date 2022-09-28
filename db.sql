@@ -35,10 +35,7 @@ title = '제목3',
 
 SELECT * FROM article;
 
-INSERT INTO article
-SET regDate = NOW(),
-updateDate = NOW(),
-title = CONCAT('제목__', RAND()),
-`body`= CONCAT('내용__', RAND());
+INSERT INTO article(regDate,updateDate,title, `body`)
+SELECT NOW(),NOW(), CONCAT('제목_',RAND()),CONCAT('내용_',RAND())
+FROM article;
 
-SELECT COUNT(*) article;
