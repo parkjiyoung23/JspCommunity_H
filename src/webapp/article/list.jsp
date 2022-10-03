@@ -11,7 +11,7 @@ int totalPage = (int) request.getAttribute("totalPage");
 <head>
     <meta charset-"UTF-8">
     <title>게시물 리스트</title>
-</head>
+</head>X
 <body>
         <h1>게시물 리스트</h1>
         <div>

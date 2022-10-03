@@ -39,3 +39,13 @@ INSERT INTO article(regDate,updateDate,title, `body`)
 SELECT NOW(),NOW(), CONCAT('제목_',RAND()),CONCAT('내용_',RAND())
 FROM article;
 
+# 회원 테이블 생성
+CREATE TABLE `member`(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginId CHAR(100) NOT NULL UNIQUE,
+	loginPw CHAR(100) NOT NULL,
+	`name` LONGTEXT NOT NULL
+);
+SELECT * FROM `member`;
