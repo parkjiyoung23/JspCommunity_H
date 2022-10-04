@@ -13,6 +13,7 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 </head>
 <body>
     <h1>게시물 상세페이지</h1>
+       <%@ include file="../part/topBar.jspf"%>
     <table>
     <div>번호 : <%= (int) articleRow.get("id")%></div>
     <div>날짜 : <%= (String) articleRow.get("regDate")%></div>
