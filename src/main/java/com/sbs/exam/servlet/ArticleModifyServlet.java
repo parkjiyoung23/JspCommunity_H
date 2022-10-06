@@ -44,7 +44,7 @@ public class ArticleModifyServlet extends HttpServlet {
 
       Map<String, Object> articleRow = DBUtil.selectRow(con, sql);
     req.setAttribute("articleRow", articleRow);
-      req.getRequestDispatcher("../article/modify.jsp").forward(req, resp);
+      req.getRequestDispatcher("/jsp/article/modify.jsp").forward(req, resp);
     } catch (SQLException e) {
       e.printStackTrace();
     } catch ( SQLErrorException e ) {

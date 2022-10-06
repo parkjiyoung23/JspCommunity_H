@@ -1,5 +1,6 @@
 package com.sbs.exam.service;
 
+import com.sbs.exam.dao.ArticleDao;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
 
@@ -9,9 +10,9 @@ import java.util.Map;
 
 
   public class ArticleService {
-    private Connection con;
+    private ArticleDao articleDao;
     public ArticleService(Connection con) {
-      this.con = con;
+      this.articleDao = new ArticleDao(con);
     }
 
 
@@ -22,10 +23,8 @@ import java.util.Map;
   public int getForPrintListTotalPage() {
     int itemInAPage = getItemsInAPage();
 
-    SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
-    sql.append("FROM article");
 
-    int totalCount = DBUtil.selectRowIntValue(con, sql);
+    int totalCount = articleDao.getTotalCount();
     int totalPage = (int) Math.ceil((double)totalCount / itemInAPage);
     return totalPage;
   }
@@ -34,12 +33,9 @@ import java.util.Map;
     int itemInAPage = getItemsInAPage();
     int limitFrom = (page - 1) * itemInAPage;
 
-    SecSql sql = SecSql.from("SELECT *");
-    sql.append("FROM article");
-    sql.append("ORDER BY id DESC");
-    sql.append("LIMIT ?, ?", limitFrom, itemInAPage);
 
-    List<Map<String, Object>> articleRows = DBUtil.selectRows(con, sql);
+
+    List<Map<String, Object>> articleRows = articleDao.getARticleRows(itemInAPage,limitFrom);
 
     return articleRows;
   }
