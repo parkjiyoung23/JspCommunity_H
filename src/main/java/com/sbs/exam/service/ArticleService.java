@@ -1,42 +1,41 @@
 package com.sbs.exam.service;
 
 import com.sbs.exam.dao.ArticleDao;
-import com.sbs.exam.util.DBUtil;
-import com.sbs.exam.util.SecSql;
+import com.sbs.exam.dto.Article;
 
 import java.sql.Connection;
 import java.util.List;
-import java.util.Map;
 
 
-  public class ArticleService {
+public class ArticleService {
     private ArticleDao articleDao;
+
     public ArticleService(Connection con) {
       this.articleDao = new ArticleDao(con);
     }
 
 
-  public int getItemsInAPage() {
-    return 20;
+    public int getItemsInAPage() {
+      return 20;
+    }
+
+    public int getForPrintListTotalPage() {
+      int itemInAPage = getItemsInAPage();
+
+
+      int totalCount = articleDao.getTotalCount();
+      int totalPage = (int) Math.ceil((double) totalCount / itemInAPage);
+      return totalPage;
+    }
+
+    public List<Article> getForPrintArticles(int page) {
+      int itemInAPage = getItemsInAPage();
+      int limitFrom = (page - 1) * itemInAPage;
+
+
+      List<Article> articles = articleDao.getArticles(itemInAPage, limitFrom);
+
+      return articles;
+    }
   }
 
-  public int getForPrintListTotalPage() {
-    int itemInAPage = getItemsInAPage();
-
-
-    int totalCount = articleDao.getTotalCount();
-    int totalPage = (int) Math.ceil((double)totalCount / itemInAPage);
-    return totalPage;
-  }
-
-  public List<Map<String, Object>> getForPrintArticleRows(int page) {
-    int itemInAPage = getItemsInAPage();
-    int limitFrom = (page - 1) * itemInAPage;
-
-
-
-    List<Map<String, Object>> articleRows = articleDao.getARticleRows(itemInAPage,limitFrom);
-
-    return articleRows;
-  }
-}
