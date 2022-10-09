@@ -20,6 +20,7 @@ public class ArticleController extends Controller {
   public ArticleController(HttpServletRequest req, HttpServletResponse resp, Connection con) {
     this.req = req;
     this.resp = resp;
+    this.con = con;
 
     articleService = new ArticleService(con);
   }
