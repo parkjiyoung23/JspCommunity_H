@@ -16,9 +16,8 @@ public class ArticleService {
       this.articleDao = new ArticleDao(con);
     }
 
-
     public int getItemsInAPage() {
-      return 20;
+      return 5;
     }
 
     public int getForPrintListTotalPage() {
