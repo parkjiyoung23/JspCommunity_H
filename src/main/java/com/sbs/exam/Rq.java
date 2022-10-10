@@ -1,10 +1,10 @@
 package com.sbs.exam;
 
 import com.sbs.exam.util.Util;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -60,10 +60,10 @@ public class Rq {
   public String getControllerTypeName(){
     return controllerTypeName;
   }
-
   public String getControllerName() {
     return controllerName;
   }
+
   public String getActionMethodName() {
     return actionMethodName;
   }
@@ -120,6 +120,7 @@ public class Rq {
     }
   }
 
+
   public void historyBack(String msg) {
     println("<script>");
     printf("alert(%s);\n", msg);
@@ -132,5 +133,8 @@ public class Rq {
     printf("alert('%s');\n", msg);
     printf("location.replace('%s');\n", redirectUri);
     println("</script>");
+  }
+  public void setAttr(String attrName, Object attrValue) {
+    req.setAttribute(attrName, attrValue);
   }
 }
