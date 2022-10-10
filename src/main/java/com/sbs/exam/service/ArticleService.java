@@ -2,6 +2,8 @@ package com.sbs.exam.service;
 
 import com.sbs.exam.dao.ArticleDao;
 import com.sbs.exam.dto.Article;
+import com.sbs.exam.dto.ResultData;
+import com.sbs.exam.util.Util;
 
 import java.sql.Connection;
 import java.util.List;
@@ -37,5 +39,10 @@ public class ArticleService {
 
       return articles;
     }
+  public ResultData write(String title, String body, int loginedMemberId) {
+    int id = articleDao.write(title, body, loginedMemberId);
+
+    return ResultData.from("S-1", Util.f("%d번 게시물이 생성되었습니다.", id), "id", id);
+  }
   }
 

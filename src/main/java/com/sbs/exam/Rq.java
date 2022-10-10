@@ -1,6 +1,6 @@
 package com.sbs.exam;
 
-import jakarta.servlet.http.HttpServlet;
+import com.sbs.exam.util.Util;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.RequestDispatcher;
@@ -16,13 +16,12 @@ public class Rq {
   private String controllerTypeName;
   private String controllerName;
   private String actionMethodName;
-  public Rq(HttpServletRequest req, HttpServletResponse resp) {
 
+  public Rq(HttpServletRequest req, HttpServletResponse resp) {
     // 들어오는 파라미터를 UTF-8로 해석
     try {
       req.setCharacterEncoding("UTF-8");
-    }
-    catch (UnsupportedEncodingException e){
+    } catch (UnsupportedEncodingException e){
       throw new RuntimeException(e);
     }
 
@@ -44,16 +43,20 @@ public class Rq {
       isInvalid = true;
       return;
     }
+
     this.controllerTypeName = requestUriBIts[1];
     this.controllerName = requestUriBIts[2];
     this.actionMethodName =  requestUriBIts[3];
   }
+
   public HttpServletRequest getReq(){
     return  req;
   }
+
   public boolean getIsInvalid(){
     return isInvalid;
   }
+
   public String getControllerTypeName(){
     return controllerTypeName;
   }
@@ -61,8 +64,6 @@ public class Rq {
   public String getControllerName() {
     return controllerName;
   }
-
-
   public String getActionMethodName() {
     return actionMethodName;
   }
@@ -82,6 +83,7 @@ public class Rq {
     if(value == null){
       return defaltValue;
     }
+
     try {
       return Integer.parseInt(value);
     }
@@ -89,18 +91,24 @@ public class Rq {
       return defaltValue;
     }
   }
-  public void appendBody(String str){
+
+  public void print(String str){
     try {
       resp.getWriter().append(str);
-
-    }
-    catch (IOException e){
+    } catch (IOException e){
       throw new RuntimeException(e);
     }
   }
 
-  public void jsp(String jspPath){
+  public void println(String str) {
+    print(str + "\n");
+  }
 
+  public void printf(String format, Object... args) {
+    print(Util.f(format, args));
+  }
+
+  public void jsp(String jspPath){
     RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/" + jspPath + ".jsp");
 
     try{
@@ -110,5 +118,12 @@ public class Rq {
     }catch (IOException e){
       throw new RuntimeException(e);
     }
+  }
+
+  public void historyBack(String msg) {
+    println("<script>");
+    printf("alert(%);\n", msg);
+    println("history.back();");
+    println("</script>");
   }
 }
