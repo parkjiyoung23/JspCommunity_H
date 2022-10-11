@@ -1,12 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<!doctype html>
-<head>
-  <meta charset="UTF-8">
-  <title>회원가입</title>
-</head>
-<body>
-    <h1>회원가입</h1>
+<c:set var="pageTitle" value="회원가입"></c:set>
+<%@ include file="../part/head.jspf"%>
+<h1>회원가입</h1>
 
     <script>
       let JoinForm__submitDone = false;
@@ -62,5 +59,4 @@
         </button>
       </div>
     </form>
-</body>
-</html>
+<%@ include file="../part/foot.jspf"%>
