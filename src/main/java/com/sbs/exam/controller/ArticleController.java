@@ -45,6 +45,12 @@ public class ArticleController extends Controller {
       case "doWrite":
         actionDoWrite(rq);
         break;
+      case "modify":
+        actionShowModify(rq);
+        break;
+      case "doModify":
+        actionDoModify(rq);
+        break;
       case "doDelete":
         actionDoDelete(rq);
         break;
@@ -53,6 +59,57 @@ public class ArticleController extends Controller {
         break;
     }
   }
+
+  @Override
+  public void perforAction(Rq rq) {
+
+  }
+
+  private void actionDoModify(Rq rq) {
+    int id = rq.getIntParam("id", 0);
+    String title = rq.getParam("title", "");
+    String body = rq.getParam("body", "");
+    String redirectUri = rq.getParam("redirectUri", Util.f("../article/detail?id=%d", id));
+
+    if (id == 0) {
+      rq.historyBack("id를 입력해주세요.");
+      return;
+    }
+
+    if (title.length() == 0) {
+      rq.historyBack("title을 입력해주세요.");
+      return;
+    }
+
+    if (body.length()== 0) {
+      rq.historyBack("body를 입력해주세요.");
+      return;
+    }
+
+    ResultData modifyRd = articleService.modify(id, title, body);
+
+    rq.replace(modifyRd.getMsg(), redirectUri);
+  }
+
+  private void actionShowModify(Rq rq) {
+    int id = rq.getIntParam("id", 0);
+
+    if (id == 0) {
+      rq.historyBack("id를 입력해주세요.");
+      return;
+    }
+
+    Article article = articleService.getForPrintArticleById(id);
+
+    if ( article == null ) {
+      rq.historyBack(Util.f("%d번 게시물이 존재하지 않습니다.", id));
+      return;
+    }
+
+    rq.setAttr("article", article);
+    rq.jsp("article/modify");
+  }
+
   private void actionDoDelete(Rq rq) {
     int id = rq.getIntParam("id", 0);
     String redirectUri = rq.getParam("redirectUri", "../article/list");
@@ -72,10 +129,6 @@ public class ArticleController extends Controller {
     ResultData deleteRd = articleService.delete(id);
 
     rq.replace(deleteRd.getMsg(), redirectUri);
-  }
-  @Override
-  public void perforAction(Rq rq) {
-
   }
 
   private void actionDetailList(Rq rq) {
